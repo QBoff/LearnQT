@@ -1,4 +1,26 @@
-print("Hello")
-a = int(input())
-if a > 90:
-    print(a)
+import sys
+
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+
+
+class Example(QWidget):
+    def init(self):
+        super().init()
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(300, 300, 300, 300)
+        self.setWindowTitle('Первая программа')
+    def initUI(self):
+        self.setGeometry(300, 300, 300, 300)
+        self.setWindowTitle('Вторая программа')
+        btn = QPushButton('Кнопка', self)
+        btn.resize(100, 100)
+        btn.move(100, 100)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Example()
+    ex.show()
+    sys.exit(app.exec())
