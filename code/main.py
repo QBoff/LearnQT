@@ -1,138 +1,139 @@
+
 import sys
 
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
+# Унаследуем наш класс от простейшего графического примитива QWidget
 
 
 class Example(QWidget):
     def __init__(self):
+        # Надо не забыть вызвать инициализатор базового класса
         super().__init__()
-
-        # elements of out design
-        self.eq = QPushButton("=", self)
-        self.point = QPushButton(".", self)
-        self.CE = QPushButton("CE", self)
-        self.zero = QPushButton("0", self)
-        self.C = QPushButton("C", self)
-        self.plus = QPushButton("+", self)
-        self.minus = QPushButton("-", self)
-        self.umnosh = None
-        self.delim = QPushButton("/", self)
-        self.first_nums = QPlainTextEdit(self)
-        self.cheque = QPlainTextEdit(self)
-
-        self.string = ""
-        self.first_nums_string = ""
-        self.initUI()  # here will be all settings about our design
+        # В метод initUI() будем выносить всю настройку интерфейса,
+        # чтобы не перегружать инициализатор
+        self.initUI()
 
     def initUI(self):
-        self.setGeometry(550, 200, 600, 500)
+        # Зададим размер и положение нашего виджета,
+        self.setGeometry(550, 200, 800, 500)
         self.setWindowTitle("Прятки для виджетов")
-        sp = [7, 8, 9, 4, 5, 6, 1, 2, 3]
-        self.string = ""
-        self.first_nums_string = ""
-        self.cheque.resize(600, 20)
-        self.cheque.move(0, 0)
 
-        self.first_nums.resize(600, 50)
-        self.first_nums.move(0, 20)
+        self.lab = QPushButton("Играть ещё раз", self)
 
-        x, y = 175, 70
+        self.lab.resize(150, 50)
+        self.lab.setFont(QFont("Areal", 11))
+        self.lab.move(550, 200)
+        self.lab.clicked.connect(self.start)
 
-        for i in range(1, 10):
-            btn = QPushButton(str(sp[i - 1]), self)
-            btn.resize(70, 70)
-            btn.move(x, y)
-            btn.clicked.connect(self.add_all)
-            btn.clicked.connect(self.fr_num)
+        self.status = QLabel("Статус", self)
+        self.status.resize(200, 50)
+        self.status.setFont(QFont("Areal", 9))
+        self.status.move(550, 260)
+
+        self.switcher = QButtonGroup(self)
+
+        button1 = QRadioButton('X', self)
+        button1.resize(50, 50)
+        button1.move(200, 10)
+
+        button2 = QRadioButton('0', self)
+        button2.resize(50, 50)
+        button2.move(260, 10)
+
+        self.switcher.addButton(button1, 0)
+        self.switcher.addButton(button2, 1)
+        self.switcher.button(0).setChecked(True)
+
+        self.buttons = []
+        x = 100
+        y = 5
+
+        for i in range(9):
+
+            btn = QPushButton(" ", self)
+            self.buttons.append(btn)
+            btn.setEnabled(True)
+            btn.resize(100, 100)
+            btn.clicked.connect(self.process)
             if i % 3 == 0:
-                x = 175
-                y += 70
-            else:
-                x += 70
+                y += 100
+                x = 100
 
-        self.delim.resize(70, 70)
-        self.delim.move(385, 70)
-        self.delim.clicked.connect(self.add_all)
-        self.delim.clicked.connect(self.fr_num)
+            btn.move(x, y)
+            x += 100
 
-        self.umnosh = QPushButton("*", self)
-        self.umnosh.resize(70, 70)
-        self.umnosh.move(385, 140)
-        self.umnosh.clicked.connect(self.add_all)
-        self.umnosh.clicked.connect(self.fr_num)
+        print(len(self.buttons))
+        print(self.switcher.button(0).text())
 
-        self.minus.resize(70, 70)
-        self.minus.move(385, 210)
-        self.minus.clicked.connect(self.add_all)
-        self.minus.clicked.connect(self.fr_num)
+    def start(self):
+        self.switcher.button(0).setEnabled(True)
+        self.switcher.button(1).setEnabled(True)
+        self.switcher.button(0).setChecked(True)
 
-        self.plus.resize(70, 70)
-        self.plus.move(385, 280)
-        self.plus.clicked.connect(self.add_all)
-        self.plus.clicked.connect(self.fr_num)
+        for i in range(9):
+            self.buttons[i].setText("")
+            self.buttons[i].setEnabled(True)
 
-        self.C.resize(70, 70)
-        self.C.move(175, 280)
-        self.C.clicked.connect(self.c)
+        self.status.setText(
+            self.status.text() + " выберите игрока!"
+        )
 
-        self.zero.resize(70, 70)
-        self.zero.move(245, 280)
-        self.zero.clicked.connect(self.add_all)
-        self.zero.clicked.connect(self.fr_num)
+    def process(self):
+        self.status.setText("Играем")
 
-        self.CE.resize(70, 70)
-        self.CE.move(315, 280)
-        self.CE.clicked.connect(self.ce)
+        self.sender().setText(
+            self.switcher.button(self.switcher.checkedId()).text()
+        )
+        self.sender().setEnabled(False)
+        self.switcher.button(0).setEnabled(False)
+        self.switcher.button(1).setEnabled(False)
 
-        self.point.resize(70, 70)
-        self.point.move(175, 350)
-        self.point.clicked.connect(self.add_all)
-        self.point.clicked.connect(self.fr_num)
-
-        self.eq.resize(140, 70)
-        self.eq.move(315, 350)
-        self.eq.clicked.connect(self.result)
-
-    def add_all(self):
-        self.string += self.sender().text()
-        self.cheque.setPlainText(self.string)
-        print(self.string)
-
-    def fr_num(self):
-
-        if self.sender().text() in "+-*/":
-            self.first_nums_string = ""
+        if self.switcher.checkedId() == 0:
+            self.switcher.button(1).setChecked(True)
         else:
-            self.first_nums_string += self.sender().text()
+            self.switcher.button(0).setChecked(True)
 
-        self.first_nums.setPlainText(self.first_nums_string)
+        winner = self.winner()
+        print(winner)
+        if winner != -1:
+            self.finish(winner)
 
-    def result(self):
-        try:
-            res = eval(self.string)
-            if '.' in self.string:
-                self.string = str(float(res))
-                self.cheque.setPlainText(self.string)
-                self.first_nums_string = str(float(res))
-                self.first_nums.setPlainText(self.first_nums_string)
-            else:
-                self.string = str(int(res))
-                self.cheque.setPlainText(self.string)
-                self.first_nums_string = str(int(res))
-                self.first_nums.setPlainText(self.first_nums_string)
+        if not self.checkEnabled():
+            self.finish(winner)
 
-        except Exception:
-            self.first_nums.setPlainText("Error")
+    def winner(self):
+        self.comb = [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6),
+                     (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]
 
-    def ce(self):
-        self.cheque.setPlainText("")
-        self.first_nums.setPlainText("")
-        self.string = ""
-        self.first_nums_string = ""
+        for position in self.comb:
+            if self.buttons[position[0]].text() == self.buttons[position[1]].text() \
+                    == self.buttons[position[2]].text() == 'X':
+                return 0
 
-    def c(self):
-        self.first_nums.setPlainText("")
-        self.first_nums_string = ""
+            elif self.buttons[position[0]].text() == self.buttons[position[1]].text() \
+                    == self.buttons[position[2]].text() == '0':
+                return 1
+
+        return -1
+
+    def checkEnabled(self):
+        for i in range(9):
+            if self.buttons[i].isEnabled():
+                return True
+        return False
+
+    def finish(self, winner):
+        for i in range(9):
+            self.buttons[i].setEnabled(False)
+
+        if winner == 0:
+            self.status.setText("игрок X выйграл")
+        elif winner == 1:
+            self.status.setText("игрок 0 выйграл")
+        else:
+            self.status.setText("ничья")
 
 
 if __name__ == '__main__':
