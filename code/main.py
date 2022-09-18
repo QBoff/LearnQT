@@ -1,49 +1,55 @@
 import sys
 
-from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
-# Унаследуем наш класс от простейшего графического примитива QWidget
 
 
 class Example(QWidget):
     def __init__(self):
-        # Надо не забыть вызвать инициализатор базового класса
         super().__init__()
-        # В метод initUI() будем выносить всю настройку интерфейса,
-        # чтобы не перегружать инициализатор
-        self.initUI()
+
+        # elements of out design
+        self.eq = QPushButton("=", self)
+        self.point = QPushButton(".", self)
+        self.CE = QPushButton("CE", self)
+        self.zero = QPushButton("0", self)
+        self.C = QPushButton("C", self)
+        self.plus = QPushButton("+", self)
+        self.minus = QPushButton("-", self)
+        self.umnosh = None
+        self.delim = QPushButton("/", self)
+        self.first_nums = QPlainTextEdit(self)
+        self.cheque = QPlainTextEdit(self)
+
+        self.string = ""
+        self.first_nums_string = ""
+        self.initUI()  # here will be all settings about our design
 
     def initUI(self):
-        # Зададим размер и положение нашего виджета,
         self.setGeometry(550, 200, 600, 500)
         self.setWindowTitle("Прятки для виджетов")
         sp = [7, 8, 9, 4, 5, 6, 1, 2, 3]
         self.string = ""
         self.first_nums_string = ""
-        self.cheque = QPlainTextEdit(self)
         self.cheque.resize(600, 20)
         self.cheque.move(0, 0)
 
-        self.first_nums = QPlainTextEdit(self)
         self.first_nums.resize(600, 50)
         self.first_nums.move(0, 20)
 
-        self.x, self.y = 175, 70
+        x, y = 175, 70
 
         for i in range(1, 10):
             btn = QPushButton(str(sp[i - 1]), self)
             btn.resize(70, 70)
-            btn.move(self.x, self.y)
+            btn.move(x, y)
             btn.clicked.connect(self.add_all)
             btn.clicked.connect(self.fr_num)
             if i % 3 == 0:
-                self.x = 175
-                self.y += 70
+                x = 175
+                y += 70
             else:
-                self.x += 70
+                x += 70
 
-        self.delim = QPushButton("/", self)
         self.delim.resize(70, 70)
         self.delim.move(385, 70)
         self.delim.clicked.connect(self.add_all)
@@ -55,41 +61,34 @@ class Example(QWidget):
         self.umnosh.clicked.connect(self.add_all)
         self.umnosh.clicked.connect(self.fr_num)
 
-        self.minus = QPushButton("-", self)
         self.minus.resize(70, 70)
         self.minus.move(385, 210)
         self.minus.clicked.connect(self.add_all)
         self.minus.clicked.connect(self.fr_num)
 
-        self.plus = QPushButton("+", self)
         self.plus.resize(70, 70)
         self.plus.move(385, 280)
         self.plus.clicked.connect(self.add_all)
         self.plus.clicked.connect(self.fr_num)
 
-        self.C = QPushButton("C", self)
         self.C.resize(70, 70)
         self.C.move(175, 280)
         self.C.clicked.connect(self.c)
 
-        self.zero = QPushButton("0", self)
         self.zero.resize(70, 70)
         self.zero.move(245, 280)
         self.zero.clicked.connect(self.add_all)
         self.zero.clicked.connect(self.fr_num)
 
-        self.CE = QPushButton("CE", self)
         self.CE.resize(70, 70)
         self.CE.move(315, 280)
         self.CE.clicked.connect(self.ce)
 
-        self.point = QPushButton(".", self)
         self.point.resize(70, 70)
         self.point.move(175, 350)
         self.point.clicked.connect(self.add_all)
         self.point.clicked.connect(self.fr_num)
 
-        self.eq = QPushButton("=", self)
         self.eq.resize(140, 70)
         self.eq.move(315, 350)
         self.eq.clicked.connect(self.result)
@@ -121,6 +120,7 @@ class Example(QWidget):
                 self.cheque.setPlainText(self.string)
                 self.first_nums_string = str(int(res))
                 self.first_nums.setPlainText(self.first_nums_string)
+
         except Exception:
             self.first_nums.setPlainText("Error")
 

@@ -1,8 +1,11 @@
 def gcd_ext(a, b):
+
     if b == 0:
         return a, 1, 0
+
     d, x, y = gcd_ext(b, a % b)
     x, y = y, x - (a // b) * y
+
     return d, x, y
 
 
@@ -25,3 +28,6 @@ else:
         y = cd * y - int(a / d)  # находим наши x и y
 
     print(x, y)
+
+a = [1, 2, 3, 4]
+print(list(filter(lambda x: x % 2 != 0, a)))
