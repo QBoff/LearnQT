@@ -20,10 +20,7 @@ sys.excepthook = excepthook
 
 class Example(QWidget):
     def __init__(self):
-        # Надо не забыть вызвать инициализатор базового класса
         super().__init__()
-        # В метод initUI() будем выносить всю настройку интерфейса,
-        # чтобы не перегружать инициализатор
         self.cheque = QPlainTextEdit(self)
         self.order = QPushButton("Заказать", self)
         self.check_box1 = QCheckBox("Чизбургер", self)
