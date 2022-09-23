@@ -1,5 +1,6 @@
 n = int(input())
-a = n * 17
+a = n * 3  # домнажаем на 3 так как это минимальное число чтобы найти в промежутке от 2 до n * 3
+#            простые числа с порядковым номером n
 
 prime = [True] * (a + 1)
 prime[0] = prime[1] = False
@@ -20,7 +21,7 @@ count = 0
 for item in range(a):
     if prime[item]:
         count += 1
-    
+
     if count == n:
         print(item)
         break
