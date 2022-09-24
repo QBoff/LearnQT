@@ -20,17 +20,21 @@ sys.excepthook = excepthook
 
 class Example(QWidget):
     def __init__(self):
+        # Надо не забыть вызвать инициализатор базового класса
         super().__init__()
+        # В метод initUI() будем выносить всю настройку интерфейса,
+        # чтобы не перегружать инициализатор
+        self.list_names = ["Чизбургер", "Гамбургер", "Кока-кола", "Нагетсы"]
         self.cheque = QPlainTextEdit(self)
         self.order = QPushButton("Заказать", self)
-        self.check_box1 = QCheckBox("Чизбургер", self)
-        self.line_edit1 = QLineEdit("0", self)
-        self.check_box2 = QCheckBox("Гамбургер", self)
-        self.line_edit2 = QLineEdit("0", self)
-        self.check_box3 = QCheckBox("Кока-кола", self)
-        self.line_edit3 = QLineEdit("0", self)
-        self.check_box4 = QCheckBox("Нагетсы", self)
-        self.line_edit4 = QLineEdit("0", self)
+        # self.check_box1 = QCheckBox("Чизбургер", self)
+        # self.line_edit1 = QLineEdit("0", self)
+        # self.check_box2 = QCheckBox("Гамбургер", self)
+        # self.line_edit2 = QLineEdit("0", self)
+        # self.check_box3 = QCheckBox("Кока-кола", self)
+        # self.line_edit3 = QLineEdit("0", self)
+        # self.check_box4 = QCheckBox("Нагетсы", self)
+        # self.line_edit4 = QLineEdit("0", self)
         self.checkboxes = []
         self.initUI()
 
@@ -39,44 +43,7 @@ class Example(QWidget):
         self.setGeometry(550, 200, 600, 300)
         self.setWindowTitle("Прятки для виджетов")
 
-        self.check_box1.move(20, 5)
-
-        self.line_edit1.resize(40, 20)
-        self.line_edit1.move(130, 5)
-        self.line_edit1.setEnabled(False)
-        self.check_box1.stateChanged.connect(
-            lambda: self.isCh([self.check_box1, self.line_edit1, 10]))
-        self.checkboxes.append([self.check_box1, self.line_edit1, 10])
-
-        self.check_box2.move(20, 35)
-        # self.checkboxes.append(self.check_box2)
-
-        self.line_edit2.resize(40, 20)
-        self.line_edit2.move(130, 35)
-        self.line_edit2.setEnabled(False)
-        self.check_box2.stateChanged.connect(
-            lambda: self.isCh([self.check_box2, self.line_edit2, 10]))
-        self.checkboxes.append([self.check_box2, self.line_edit2, 20])
-
-        self.check_box3.move(20, 65)
-        # self.checkboxes.append(self.check_box3)
-
-        self.line_edit3.resize(40, 20)
-        self.line_edit3.move(130, 65)
-        self.line_edit3.setEnabled(False)
-        self.check_box3.stateChanged.connect(
-            lambda: self.isCh([self.check_box3, self.line_edit3, 10]))
-        self.checkboxes.append([self.check_box3, self.line_edit3, 25])
-
-        self.check_box4.move(20, 95)
-        # self.checkboxes.append(self.check_box4)
-
-        self.line_edit4.resize(40, 20)
-        self.line_edit4.move(130, 95)
-        self.line_edit4.setEnabled(False)
-        self.check_box4.stateChanged.connect(
-            lambda: self.isCh([self.check_box4, self.line_edit4, 10]))
-        self.checkboxes.append([self.check_box4, self.line_edit4, 30])
+        self.move_checkbox()
 
         self.order.resize(150, 50)
         self.order.move(20, 135)
@@ -99,12 +66,28 @@ class Example(QWidget):
             orders
         )
 
-    @staticmethod
-    def isCh(ed):
-        if ed[0].isChecked():
-            ed[1].setText("1")
-            ed[1].setEnabled(True)
 
+    def isCh(self):
+        if self.sender().isChecked():
+            for e in self.checkboxes:
+                if self.sender() == e[0]:
+                    e[1].setText("1")
+                    e[1].setEnabled(True)
+    
+    def move_checkbox(self) -> None:
+        x, x2, y = 20, 130, 5
+        for i in range(4):
+            self.check_box = QCheckBox(self.list_names[i], self)
+            self.check_box.move(x, y)
+            
+            self.line_edit1 = QLineEdit("0", self)
+            self.line_edit1.resize(40, 20)
+            self.line_edit1.move(x2, y)
+            self.line_edit1.setEnabled(False)
+            self.check_box.stateChanged.connect(self.isCh)
+            self.checkboxes.append([self.check_box, self.line_edit1, 10])
+            
+            y += 20
 
 if __name__ == '__main__':
     # Создадим класс приложения PyQT
