@@ -1,5 +1,4 @@
 import sys
-import time
 
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow
