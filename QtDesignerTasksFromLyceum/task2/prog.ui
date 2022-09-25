@@ -327,8 +327,7 @@
        <item>
         <widget class="QLabel" name="label_4">
          <property name="styleSheet">
-          <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
-font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
+          <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
          </property>
          <property name="text">
           <string>Ваш флаг:</string>
@@ -356,7 +355,7 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
