@@ -44,5 +44,5 @@ while True:
         back()
     elif command == "clear":
         clear()
-    
+
     command = input()
