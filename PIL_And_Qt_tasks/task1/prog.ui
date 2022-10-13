@@ -41,7 +41,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="all_btn">
           <property name="text">
            <string>ALL</string>
           </property>
@@ -65,16 +65,16 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QPushButton" name="rotate_anticlockwise">
         <property name="text">
-         <string>PushButton</string>
+         <string>Поворот против часовой стрелке</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="rotate_clockwise">
         <property name="text">
-         <string>PushButton</string>
+         <string>Поворот по часовой стрелке</string>
         </property>
        </widget>
       </item>
