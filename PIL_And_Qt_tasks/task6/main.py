@@ -24,6 +24,19 @@ class MyWidget(QMainWindow):
             f = float(self.k.text())
             if f >= 1:
                 raise OtherIt
+            else:
+                if f >= 0.67 and f <= 0.7:
+                    f = 0.71
+                elif f <= 0.67 and f >= 0.55:
+                    f = -0.76
+                elif f < 0.5 and f > 0.4:
+                    f = 0.92
+                elif f <= 0.4 and f >= 0.3:
+                    f = 0.83
+                elif f < 0.3 and f >= 0.2:
+                    f = 0.75
+                elif f < 0.2 and f >= 0:
+                    f == 0.71
             n = int(self.n.text())
             dr = DrawRect(f, n)
             dr.draw_rot_sqr((255, 255))
@@ -58,7 +71,9 @@ class DrawRect:
             d = 1
         elif direction == 'ccw':
             d = -1
-        return d*math.asin(a/(f*L))
+        rt = (d.real*math.asin(a.real/(f.real*L.real))).real
+        print(rt)
+        return (d.real*math.asin((a / (f * L)).real))
 
     def distance(self, ax, ay, bx, by):
         return math.sqrt((by - ay) ** 2 + (bx - ax) ** 2)
