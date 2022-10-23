@@ -11,6 +11,7 @@ with open("alpha_oriona.csv", "r", encoding="utf-8") as file:
     start_time = reader[0]["time"]
     start_date = reader[0]["date"]
     for i in range(1, len(reader)):
+        
         if int(reader[i - 1]["luminosity"]) >= int(reader[i]["luminosity"]):
             pq.append(int(reader[i - 1]["luminosity"]))
             if i == len(reader) - 1:
