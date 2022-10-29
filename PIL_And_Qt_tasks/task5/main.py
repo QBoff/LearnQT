@@ -37,6 +37,7 @@ class MyWidget(QMainWindow):
             255, 255, 255), outline=(255, 0, 0))
         draw.ellipse((side - side // 3, side // 6, side - side // 3 + side // 6, side // 3), fill=(
             255, 255, 255), outline=(255, 0, 0))
+        draw.arc((side // 6, side // 3, side - side // 5, side - side // 5), 0, 180, 0)
         im.save("im.png")
 
         pix = QPixmap("im.png")
@@ -54,6 +55,7 @@ class MyWidget(QMainWindow):
         draw.ellipse((self.side - self.side // 3, self.side // 6,
                       self.side - self.side // 3 + self.side // 6, self.side // 3), fill=(
             255, 255, 255), outline=(255, 0, 0))
+        draw.arc((self.side // 6, self.side // 3, self.side - self.side // 5, self.side - self.side // 5), 0, 180, 0)
 
         im.save("im.png")
         pix = QPixmap("im.png")
