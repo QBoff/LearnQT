@@ -1,25 +1,23 @@
 import csv
-import sys
 
 
-n, m = map(int, input().split())
-strings = [line.strip().split() for line in sys.stdin]
+name_of_fo = input()
+start_year, finish_year = map(str, input().split())
 
-with open("exam.csv", "w", encoding="utf-8") as file:
-    writer = csv.DictWriter(file, fieldnames=[
-                            "Фамилия", "имя", "результат 1", "результат 2", "результат 3", "сумма"],
-                            delimiter=';')
-    writer.writeheader()
+with open("salary.csv", "r", encoding="utf-8") as file, \
+        open("out_file.csv", "w", encoding="utf-8") as out_file:
 
-    for item in strings:
-        if int(item[-1]) + int(item[-2]) + int(item[-3]) >= n \
-                and m <= int(item[-1]) and m <= int(item[-2]) and m <= int(item[-3]):
+    flag = False
+    reader = list(csv.DictReader(file, delimiter=';'))
+    writer = csv.DictWriter(out_file, fieldnames=[
+                            "Субъект", start_year, finish_year], delimiter=';')
 
-            writer.writerow({
-                "Фамилия": item[0],
-                "имя": item[1],
-                "результат 1": int(item[2]),
-                "результат 2": int(item[3]),
-                "результат 3": int(item[4]),
-                "сумма": int(item[2]) + int(item[3]) + int(item[4])
-            })
+    for item in reader:
+        if item["Федеральный округ"] == name_of_fo \
+                and int(item[finish_year]) - int(item[start_year]) < int(item[start_year]) * 0.04:
+            
+            if not flag:
+                writer.writeheader()
+                flag = True
+            writer.writerow(
+                {"Субъект": item["Субъект"], start_year: item[start_year], finish_year: item[finish_year]})

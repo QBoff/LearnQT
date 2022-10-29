@@ -1,20 +1,25 @@
 import csv
-import openpyxl
+import sys
 
 
-data = openpyxl.load_workbook("data.xlsx", data_only=True)
+n, m = map(int, input().split())
+strings = [line.strip().split() for line in sys.stdin]
 
-sheet_obj = data.active
-max_row, max_column = sheet_obj.max_row, sheet_obj.max_column
+with open("exam.csv", "w", encoding="utf-8") as file:
+    writer = csv.DictWriter(file, fieldnames=[
+                            "Фамилия", "имя", "результат 1", "результат 2", "результат 3", "сумма"],
+                            delimiter=';')
+    writer.writeheader()
 
+    for item in strings:
+        if int(item[-1]) + int(item[-2]) + int(item[-3]) >= n \
+                and m <= int(item[-1]) and m <= int(item[-2]) and m <= int(item[-3]):
 
-with open("output.csv", "w", encoding="utf-8") as file:
-    writer = csv.writer(file, delimiter=';', quotechar='"')
-
-    for r in range(1, max_row + 1):
-
-        headers = []
-        for c in range(1, max_column + 1):
-            headers.append(sheet_obj.cell(row=r, column=c).value)
-
-        writer.writerow(headers)
+            writer.writerow({
+                "Фамилия": item[0],
+                "имя": item[1],
+                "результат 1": int(item[2]),
+                "результат 2": int(item[3]),
+                "результат 3": int(item[4]),
+                "сумма": int(item[2]) + int(item[3]) + int(item[4])
+            })
