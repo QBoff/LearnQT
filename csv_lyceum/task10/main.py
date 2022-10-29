@@ -17,7 +17,7 @@ class Window(QWidget):
                 return False
         return True
 
-    def loadTable(self, conditions=dict()):
+    def lt(self, conditions=dict()):
         with open('rez.csv', encoding="utf8") as csvfile:
             reader = csv.reader(csvfile, delimiter=',', quotechar='"')
             title = ['Фамилия', 'Результат']
@@ -64,7 +64,7 @@ class Window(QWidget):
 
         self.schoolInput.addItems(sorted(schools, key=int))
         self.classInput.addItems(sorted(classes, key=int))
-        self.loadTable()
+        self.lt()
 
     def onClick(self):
         school = self.schoolInput.currentText()
@@ -76,7 +76,7 @@ class Window(QWidget):
         if classs != 'Все':
             conditions[2] = classs
 
-        self.loadTable(conditions)
+        self.lt(conditions)
 
 
 if __name__ == "__main__":
