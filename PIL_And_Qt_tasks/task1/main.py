@@ -21,13 +21,13 @@ class MyWidget(QMainWindow):
             if count > 3:
                 sys.exit()
 
-            self.label.setText("Error, укажит енормальный путь в картинке!!!")
+            self.label.setText("Error, укажит енормальный путь в картинке!!!")  # type: ignore
             self.getImage()
             count += 1
 
         # self.im = Image.open(self.image_path)
         self.pixmap = QPixmap(self.image_path).scaled(382, 256)
-        self.label.setPixmap(self.pixmap)
+        self.label.setPixmap(self.pixmap)  # type: ignore
 
         self.make_colors = {
             "R": lambda color: (color[0], 0, 0),
@@ -36,12 +36,12 @@ class MyWidget(QMainWindow):
             "ALL": lambda color: (color[0], color[1], color[2])
         }
 
-        self.r_btn.clicked.connect(self.onClick)
-        self.g_btn.clicked.connect(self.onClick)
-        self.b_btn.clicked.connect(self.onClick)
-        self.all_btn.clicked.connect(self.onClick)
-        self.rotate_anticlockwise.clicked.connect(self.rotate_fun)
-        self.rotate_clockwise.clicked.connect(self.rotate_fun)
+        self.r_btn.clicked.connect(self.onClick)  # type: ignore
+        self.g_btn.clicked.connect(self.onClick)  # type: ignore
+        self.b_btn.clicked.connect(self.onClick)  # type: ignore
+        self.all_btn.clicked.connect(self.onClick)  # type: ignore
+        self.rotate_anticlockwise.clicked.connect(self.rotate_fun)  # type: ignore
+        self.rotate_clockwise.clicked.connect(self.rotate_fun)   # type: ignore # type: ignore
 
     def getImage(self):
 
@@ -57,7 +57,7 @@ class MyWidget(QMainWindow):
 
         for i in range(x):
             for j in range(y):
-                pixels[i, j] = self.make_colors[self.sender().text()
+                pixels[i, j] = self.make_colors[self.sender().text()  # type: ignore
                                                 ](pixels[i, j])
         self.last_change = self.sender().text()
 
