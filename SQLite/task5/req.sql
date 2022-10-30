@@ -1,0 +1,1 @@
+SELECT films.id, films.title, films.year, films.genre, films.duration FROM films WHERE films.title = "А у вас который час?"
