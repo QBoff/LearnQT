@@ -1,1 +1,7 @@
-SELECT films.id, films.title, films.year, films.genre, films.duration FROM films WHERE films.title = "А у вас который час?"
+SELECT DISTINCT Name FROM Track
+    WHERE AlbumId IN (
+        SELECT AlbumId FROM Album
+            WHERE ArtistId IN (
+                SELECT ArtistId FROM Artist
+                    WHERE name = "?"))
+    ORDER BY Name
