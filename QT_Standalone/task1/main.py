@@ -3,7 +3,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import QEvent, Qt
+from PyQt5.QtCore import Qt
 from PIL import Image, ImageDraw
 from random import randrange
 
