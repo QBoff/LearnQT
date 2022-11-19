@@ -6,7 +6,7 @@ from PyQt5 import uic
 class MyWidget(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi("qtgraph/task1/prog.ui", self)
+        uic.loadUi("D:\\MyProjects\\Python\\Python_0\\LearnQT\\qtgraph\\task1\\prog.ui", self)
         self.pushButton.clicked.connect(self.draw)
         
     def draw(self) -> None:
