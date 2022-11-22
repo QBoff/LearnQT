@@ -24,9 +24,7 @@
     <normaloff>info.png</normaloff>info.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">#Form {
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(232, 232, 232, 255), stop:1 rgba(160, 185, 255, 255));
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
